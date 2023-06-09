@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "start": "nodemon | npx pino-pretty",
-    "test": "vitest"
+    "test": "vitest",
+    "build": "tsc"
   },
   "devDependencies": {
     "@types/node": "^18.16.3",
