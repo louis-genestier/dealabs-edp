@@ -4,7 +4,6 @@ import { DealabsResponse } from "./lib/dealabsResponse";
 import { Comment } from "./type/response";
 import { Telegram } from "./lib/telegram";
 import { logger } from "./lib/logger";
-import { schedule } from "node-cron";
 
 const getNewComments = (
   comments: Comment[],
@@ -66,8 +65,8 @@ const main = async (redis: Redis) => {
   }
 };
 
-schedule("*/2 * * * *", async () => {
+(async () => {
   const redis = await Redis.create();
   await main(redis);
   await redis.disconnect();
-});
+})();
