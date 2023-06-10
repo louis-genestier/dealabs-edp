@@ -4,6 +4,7 @@ import { DealabsResponse } from "./lib/dealabsResponse";
 import { Comment } from "./type/response";
 import { Telegram } from "./lib/telegram";
 import { logger } from "./lib/logger";
+import { schedule } from "node-cron";
 
 const getNewComments = (
   comments: Comment[],
@@ -65,21 +66,8 @@ const main = async (redis: Redis) => {
   }
 };
 
-const start = async () => {
+schedule("*/2 * * * *", async () => {
   const redis = await Redis.create();
   await main(redis);
   await redis.disconnect();
-};
-
-// (async () => {
-//   await start();
-//   // wait for 2 minutes before restarting
-//   setTimeout(async () => {
-//     process.exit(0);
-//   }, 120000);
-// })();
-
-// restart start function every 2 minutes
-setInterval(async () => {
-  await start();
-}, 120000);
+});
