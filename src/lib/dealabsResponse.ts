@@ -1,19 +1,19 @@
 import axios from "axios";
 import { Comment, Response } from "../type/response";
+import { Headers } from "./headers";
 
 export class DealabsResponse {
   private readonly url: string;
+  private readonly Headers: Headers;
 
   constructor(private readonly parameter: string) {
+    this.Headers = new Headers();
     this.url = `https://www.dealabs.com/graphql/h/${parameter}/10`;
   }
 
   async getResponse(): Promise<Response> {
     const response = await axios.get<Response>(this.url, {
-      headers: {
-        "User-Agent":
-          "Mozilla/5.0 (iPhone14,3; U; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) Version/10.0 Mobile/19A346 Safari/602.1",
-      },
+      headers: this.Headers.getHeaders(),
     });
     return response.data;
   }
