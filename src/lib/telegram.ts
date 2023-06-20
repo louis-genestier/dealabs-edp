@@ -1,11 +1,13 @@
 import "dotenv/config";
 import TelegramBot from "node-telegram-bot-api";
 import { parse } from "node-html-parser";
+import { logger } from "./logger";
 
 export class Telegram {
   private readonly token = process.env.TELEGRAM_TOKEN!;
   private readonly chatId = process.env.TELEGRAM_CHAT_ID!;
   private bot: TelegramBot;
+  private logger = logger;
 
   constructor() {
     this.bot = new TelegramBot(this.token);
@@ -13,6 +15,7 @@ export class Telegram {
 
   async sendMessage(message: string): Promise<void> {
     if (message) {
+      this.logger.info(`Sending message: ${message}`);
       await this.bot.sendMessage(this.chatId, this.formatMessage(message), {
         parse_mode: "HTML",
       });
