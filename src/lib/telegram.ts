@@ -41,7 +41,7 @@ export class Telegram {
       .replace(/<strong>(.*)<\/strong>/g, "<b>$1</b>")
       .replace(/<em>(.*)<\/em>/g, "<i>$1</i>")
       .replace(/<del>(.*)<\/del>/g, "<s>$1</s>")
-      .replace(/<img src="(.*)" alt="(.*)" \/>/g, "")
+      .replace(/<img\b[^>]*>/g, "")
       .replace(/\n*$/, "");
 
     return parsedMessage;
