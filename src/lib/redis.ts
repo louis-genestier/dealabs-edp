@@ -1,5 +1,5 @@
-import { RedisClientType, createClient } from "redis";
 import "dotenv/config";
+import { RedisClientType, createClient } from "redis";
 import { logger } from "./logger";
 
 export class Redis {

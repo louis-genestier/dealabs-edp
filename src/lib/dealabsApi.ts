@@ -2,7 +2,7 @@ import axios from "axios";
 import { Comment, Response } from "../type/response";
 import { Headers } from "./headers";
 
-export class DealabsResponse {
+export class DealabsApi {
   private readonly url: string;
   private readonly Headers: Headers;
 

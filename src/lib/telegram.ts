@@ -22,6 +22,16 @@ export class Telegram {
     }
   }
 
+  private formatMessage(message: string): string {
+    const urls = this.getUrls(message);
+    let formattedMessage = `<b>🚨 Nouveau poste 🚨</b>\n\n${this.formatPossibleUrls(
+      urls
+    )}\n\n<b>Message: </b>\n${message}`;
+    formattedMessage = this.parseHTML(formattedMessage);
+
+    return formattedMessage;
+  }
+
   private getUrls(message: string): string[] {
     const content = parse(message);
     const urls: string[] = [];
@@ -33,7 +43,7 @@ export class Telegram {
     return urls;
   }
 
-  parseMessage(message: string): string {
+  private parseHTML(message: string): string {
     let parsedMessage = message
       .replace(/<br \/>/g, "\n")
       .replace(/<br>/g, "\n")
@@ -45,16 +55,6 @@ export class Telegram {
       .replace(/\n*$/, "");
 
     return parsedMessage;
-  }
-
-  formatMessage(message: string): string {
-    const urls = this.getUrls(message);
-    let formattedMessage = `<b>🚨 Nouveau poste 🚨</b>\n\n${this.formatPossibleUrls(
-      urls
-    )}\n\n<b>Message: </b>\n${message}`;
-    formattedMessage = this.parseMessage(formattedMessage);
-
-    return formattedMessage;
   }
 
   private formatPossibleUrls(urls: string[]): string {

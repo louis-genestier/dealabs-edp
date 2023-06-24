@@ -1,6 +1,6 @@
 import { Redis } from "./lib/redis";
 import { Payload } from "./lib/payload";
-import { DealabsResponse } from "./lib/dealabsResponse";
+import { DealabsApi } from "./lib/dealabsApi";
 import { Comment } from "./type/response";
 import { Telegram } from "./lib/telegram";
 import { logger } from "./lib/logger";
@@ -23,13 +23,13 @@ const main = async (redis: Redis) => {
   const payload = new Payload(currentPage);
   const generatedValue = await payload.generateParameter();
 
-  const dealabsResponse = new DealabsResponse(generatedValue);
+  const dealabsApi = new DealabsApi(generatedValue);
   try {
-    const data = await dealabsResponse.getResponse();
-    const comments = dealabsResponse.getComments(data);
+    const data = await dealabsApi.getResponse();
+    const comments = dealabsApi.getComments(data);
 
     const lastCommentIdFromResponse = comments[comments.length - 1].commentId;
-    const lastPageFromResponse = dealabsResponse.getLastPage(data);
+    const lastPageFromResponse = dealabsApi.getLastPage(data);
 
     if (
       lastCommentId === lastCommentIdFromResponse &&
