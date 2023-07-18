@@ -46,14 +46,16 @@ export class Telegram {
   private parseHTML(message: string): string {
     let parsedMessage = message
       .replace(/<br \/>/g, "\n")
+      .replace(/<br\/>/g, "\n")
       .replace(/<br>/g, "\n")
       .replace(/<a href="(.*)" title=(.*)>(.*)<\/a>/g, "$2")
       .replace(/<strong>(.*)<\/strong>/g, "<b>$1</b>")
       .replace(/<em>(.*)<\/em>/g, "<i>$1</i>")
       .replace(/<del>(.*)<\/del>/g, "<s>$1</s>")
       .replace(/<img\b[^>]*>/g, "")
-      .replace(/\n*$/, "");
-
+      .replace(/\n*$/, "")
+      .replace(/<div>/g, "")
+      .replace(/<\/div>/g, "\n");
     return parsedMessage;
   }
 
