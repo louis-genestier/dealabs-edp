@@ -31,6 +31,11 @@ const main = async (redis: Redis) => {
     const lastCommentIdFromResponse = comments[comments.length - 1].commentId;
     const lastPageFromResponse = dealabsApi.getLastPage(data);
 
+    if (lastPageFromResponse !== (await redis.getCurrentPage())) {
+      logger.info(`New last page: ${lastPageFromResponse}`);
+      await redis.setCurrentPage(lastPageFromResponse);
+    }
+
     if (
       lastCommentId === lastCommentIdFromResponse &&
       currentPage === lastPageFromResponse
